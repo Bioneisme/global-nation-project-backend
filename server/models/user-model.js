@@ -12,6 +12,7 @@ const userSchema = new Schema({
     facebookId: {type: String},
     isActivated: {type: Boolean, default: false},
     activationLink: {type: String},
+    resetLink: {type: String},
     roles:{type: []},
 })
 

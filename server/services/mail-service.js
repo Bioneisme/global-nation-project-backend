@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer')
 require('dotenv').config()
 
 class MailService{
-
     constructor() {
         this.transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
@@ -14,7 +13,6 @@ class MailService{
             }
         })
     }
-
     async sendActivationMail(to, link) {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
@@ -30,7 +28,6 @@ class MailService{
                 `
         })
     }
-
     async sendResetLink(to, link) {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,

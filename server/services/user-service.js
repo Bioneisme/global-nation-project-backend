@@ -83,7 +83,21 @@ class UserService{
 
         return {user: userDto}
     }
+    async updatePassword(resetLink, password) {
+        const hashPassword = await bcrypt.hash(password, 4)
+        await User.findOneAndUpdate({resetLink: resetLink}, {password: hashPassword, resetLink: null})
+    }
+    async passwordReset(id, email) {
+        let user
+        if (id != null)
+            user = await User.findOne({_id: id})
+        else
+            user = await User.findOne({email: email})
 
+        const resetLink = uuid.v4()
+        await User.findOneAndUpdate({email: user.email}, {resetLink: resetLink})
+        await mailService.sendResetLink(user.email, `${process.env.SERVER_URL}/api/reset/${resetLink}`)
+    }
 }
 
 module.exports = new UserService()
