@@ -8,11 +8,10 @@ const userSchema = new Schema({
     password: {type: String},
     image: {type: String},
     googleId: {type: String},
-    token: {type: String},
     facebookId: {type: String},
     isActivated: {type: Boolean, default: false},
-    activationLink: {type: String},
-    resetLink: {type: String},
+    activationCode: {type: Number},
+    resetCode: {type: Number},
     roles:{type: []},
 })
 
