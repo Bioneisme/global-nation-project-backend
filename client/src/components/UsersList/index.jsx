@@ -3,10 +3,10 @@ import API from "../../api";
 
 function List() {
     const [list, setList] = useState([])
+
     useEffect(() => {
         async function fetchData() {
             const response = await API.get('/getUsers')
-            console.log(response.data)
             setList(response.data)
         }
 
@@ -31,7 +31,7 @@ function List() {
                 {list.map(function (d, idx) {
                     return (
                         <tr>
-                            <th scope="row">{idx}</th>
+                            <th scope="row">{idx + 1}</th>
                             <td>{d.nickname}</td>
                             <td>{d.email}</td>
                             <td>{d.first_name}</td>

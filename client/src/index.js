@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom/client";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
-import {Provider, useSelector} from "react-redux"
-import {userSelector} from "./store/slices/userSlice";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Provider} from "react-redux"
 import {Toaster} from 'react-hot-toast';
 import store from "./store"
 import {PersistGate} from 'redux-persist/integration/react'
 import {persistStore} from 'redux-persist'
+import {PrivateRoute, AdminRoute} from './routes'
 
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
@@ -19,21 +19,16 @@ import "font-awesome/css/font-awesome.css";
 
 const persist = persistStore(store);
 
-const PrivateRoute = ({auth: {isAuthenticated}, children}) => {
-    return isAuthenticated ? children : <Navigate to="/login"/>;
-};
-
 export default function App() {
-    const {isAuth} = useSelector(userSelector)
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home/>}/>
-                    <Route path='/admin' element={<Admin/>}/>
+                    <Route path='/admin' element={<AdminRoute><Admin/></AdminRoute>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/registration' element={<SignUp/>}/>
-                    <Route path='/profile' element={<PrivateRoute auth={{ isAuthenticated: isAuth }}><Profile/></PrivateRoute>}/>
+                    <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

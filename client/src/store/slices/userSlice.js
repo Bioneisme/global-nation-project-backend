@@ -36,7 +36,7 @@ export const registerUser = createAsyncThunk(
         }
     }
 );
-
+// TODO: DELETE
 export const thirdAuth = createAsyncThunk(
     'auth/third',
     async (_, thunkAPI) => {
@@ -81,14 +81,13 @@ export const userSlice = createSlice({
         isSuccess: false,
         isError: false,
         isThirdPartyAuth: false,
-        isAuth: true,
+        isAuth: false,
         errorMessage: "",
     },
     reducers: {
         clearState: (state) => {
             state.isError = false;
             state.isSuccess = false;
-            state.isThirdPartyAuth = false;
             state.errorMessage = "";
 
             return state;

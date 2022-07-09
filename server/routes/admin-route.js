@@ -4,4 +4,12 @@ const adminController = require('../controllers/admin-controller')
 
 router.get('/getUsers', adminController.getUsers)
 
+router.get('/getUser/:email', adminController.getUser)
+
+router.post('/deleteUser', adminController.deleteUser)
+
+router.post('/addUser', adminController.addUser)
+
+router.post('/updateUser', adminController.updateUser)
+
 module.exports = router

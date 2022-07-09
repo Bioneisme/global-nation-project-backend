@@ -4,10 +4,10 @@ const mailService = require('../services/mail-service')
 const User = require('../models/user-model')
 const UserDto = require('../dtos/user-dto')
 
-class UserService{
-    async login(email, password, done){
+class UserService {
+    async login(email, password, done) {
         const user = await User.findOne({email: email})
-            if (!user) {
+        if (!user) {
             return done("User with this email doesnt exist", false)
         }
         const isPassEquals = await bcrypt.compare(password, user.password)
@@ -19,24 +19,27 @@ class UserService{
         done(null, user)
         return {user: userDto}
     }
+
     async registration(email, nickname, first_name, last_name, password) {
         const hashPassword = await bcrypt.hash(password, 4)
-        const activationLink = uuid.v4()
+        const activationCode = Math.floor(100000 + Math.random()*(999999 - 100000 + 1))
         const user = await User.create({
             email,
             nickname,
             first_name,
             last_name,
-            activationLink,
+            activationCode,
             password: hashPassword,
             roles: ["USER"]
         })
-        await mailService.sendActivationMail(email, `${process.env.SERVER_URL}/api/activate/${activationLink}`)
+
+        await mailService.sendActivationCode(email, activationCode)
 
         const userDto = new UserDto(user)
 
         return {user: userDto}
     }
+
     async googleAuth(googleId, first_name, last_name, email, nickname, image = null, token, done) {
         let user = await User.findOne({email: email});
         if (user) {
@@ -62,6 +65,7 @@ class UserService{
 
         return {user: userDto}
     }
+
     async facebookAuth(facebookId, first_name, last_name, email, nickname, image = null, done) {
         let user = await User.findOne({email: email});
         if (user) {
@@ -83,10 +87,12 @@ class UserService{
 
         return {user: userDto}
     }
-    async updatePassword(resetLink, password) {
+
+    async updatePassword(resetCode, password) {
         const hashPassword = await bcrypt.hash(password, 4)
-        await User.findOneAndUpdate({resetLink: resetLink}, {password: hashPassword, resetLink: null})
+        await User.findOneAndUpdate({resetCode: resetCode}, {password: hashPassword, resetCode: null})
     }
+
     async passwordReset(id, email) {
         let user
         if (id != null)
@@ -94,9 +100,9 @@ class UserService{
         else
             user = await User.findOne({email: email})
 
-        const resetLink = uuid.v4()
-        await User.findOneAndUpdate({email: user.email}, {resetLink: resetLink})
-        await mailService.sendResetLink(user.email, `${process.env.SERVER_URL}/api/reset/${resetLink}`)
+        const resetCode = Math.floor(100000 + Math.random()*(999999 - 100000 + 1))
+        await User.findOneAndUpdate({email: user.email}, {resetCode: resetCode})
+        await mailService.sendResetCode(user.email, resetCode)
     }
 }
 

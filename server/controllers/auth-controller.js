@@ -5,7 +5,12 @@ class AuthController {
     async registration(req, res, next) {
         try {
             const {email, nickname, first_name, last_name, password} = req.body
-            if (await User.findOne({email: email})) return res.status(409).json({'message': 'User with this email already exist'})
+            const user = await User.find({
+                email: email,
+                nickname: nickname
+            })
+            if (user.length !== 0)
+                return res.status(409).json({'message': 'User with this email or nickname already exists'})
             await userService.registration(email, nickname, first_name, last_name, password)
             return next()
         } catch (e) {
