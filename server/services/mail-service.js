@@ -13,7 +13,7 @@ class MailService{
             }
         })
     }
-    async sendActivationMail(to, link) {
+    async sendActivationCode(to, code) {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
@@ -22,13 +22,13 @@ class MailService{
             html:
                 `
                     <div>
-                        <h1>To activate follow the link</h1>
-                        <a href="${link}">${link}</a>
+                        <h1>To activate your account write this code: </h1>
+                        <a> ${code} </a>
                     </div>
                 `
         })
     }
-    async sendResetLink(to, link) {
+    async sendResetCode(to, code) {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
@@ -37,8 +37,8 @@ class MailService{
             html:
                 `
                     <div>
-                        <h1>To reset your password follow the link</h1>
-                        <a href="${link}">${link}</a>
+                        <h1>To reset your password write this code: </h1>
+                        <p> ${code} </p>
                     </div>
                 `
         })

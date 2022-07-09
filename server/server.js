@@ -1,14 +1,18 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const passport = require('passport')
+const bodyParser = require('body-parser')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const RedisStore = require('connect-redis')(session);
-const bodyParser = require('body-parser')
 const cors = require('cors')
+const mongoose = require('mongoose')
+const RedisStore = require('connect-redis')(session);
 
 const authRoute = require('./routes/auth-route')
 const userRoute = require('./routes/user-route')
+const adminRoute = require('./routes/admin-route')
+const courseRoute = require('./routes/course-route')
+
+const permissions = require('./middlewares/permissions-middleware')
 require('dotenv').config()
 require('./controllers/passport-controller')(passport)
 
@@ -59,5 +63,7 @@ async function start() {
 
 app.use('/api', authRoute)
 app.use('/api', userRoute)
+app.use('/api', permissions.isAdmin, adminRoute)
+app.use('/api', courseRoute)
 
-start()
+start().then()
