@@ -12,7 +12,7 @@ const userSchema = new Schema({
     isActivated: {type: Boolean, default: false},
     activationCode: {type: Number},
     resetCode: {type: Number},
-    roles:{type: []},
+    roles: {type: []},
 })
 
 module.exports = model("User", userSchema)
