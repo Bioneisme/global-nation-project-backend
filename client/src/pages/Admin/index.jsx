@@ -3,6 +3,7 @@ import Users from '../../components/UsersList'
 import DeleteUser from '../../components/DeleteUser'
 import AddUser from '../../components/AddUser'
 import EditUser from '../../components/EditUserInput'
+import {Link} from "react-router-dom";
 
 function Admin() {
     const [users, setUsers] = useState([])
@@ -32,13 +33,20 @@ function Admin() {
                     Users</button> <br/>
                     | <button className="btn btn-outline-danger my-1" onClick={showAddUser}>Add User</button> <br/>
                     | <button className="btn btn-outline-danger my-1" onClick={showEditUser}>Edit User</button> <br/>
-                    | <button className="btn btn-outline-danger my-1" onClick={showDeleteUser}>Delete User</button> <br/>
+                    | <button className="btn btn-outline-danger my-1" onClick={showDeleteUser}>Delete User</button>
+                    <br/>
+
+                    <button className="btn btn-danger my-1">Project Management</button>
+                    <br/>
+                    | <Link to='/new_course'>
+                    <button className="btn btn-outline-danger my-1">Create Course</button>
+                </Link> <br/>
                 </div>
                 <div className="col-9">
                     <div>
-                    {users.map((item, i) => (
-                        <div key={i}>{item}</div>
-                    ))}
+                        {users.map((item, i) => (
+                            <div key={i}>{item}</div>
+                        ))}
                     </div>
                     <div>
                         {addUser}

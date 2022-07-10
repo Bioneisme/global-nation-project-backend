@@ -1,0 +1,8 @@
+.formik input {
+    height: 30px;
+    margin: 5px;
+}
+.formik button {
+    width: 100%;
+    margin: 5px;
+}

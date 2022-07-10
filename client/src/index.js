@@ -13,6 +13,8 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp";
 import Profile from "./pages/Profile"
+import CourseCreate from "./pages/CourseCreate";
+import CourseEditor from "./pages/CourseEditor";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
@@ -28,6 +30,8 @@ export default function App() {
                     <Route path='/admin' element={<AdminRoute><Admin/></AdminRoute>}/>
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/registration' element={<SignUp/>}/>
+                    <Route path='/new_course' element={<PrivateRoute><CourseCreate/></PrivateRoute>}/>
+                    <Route path='/edit_course/:id' element={<PrivateRoute><CourseEditor/></PrivateRoute>}/>
                     <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
                 </Route>
             </Routes>
