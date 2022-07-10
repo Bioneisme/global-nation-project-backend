@@ -12,7 +12,8 @@ const userRoute = require('./routes/user-route')
 const adminRoute = require('./routes/admin-route')
 const courseRoute = require('./routes/course-route')
 
-const permissions = require('./middlewares/permissions-middleware')
+const {isAdmin, isAuth} = require('./middlewares/permissions-middleware')
+
 require('dotenv').config()
 require('./controllers/passport-controller')(passport)
 
@@ -62,8 +63,8 @@ async function start() {
 }
 
 app.use('/api', authRoute)
-app.use('/api', userRoute)
-app.use('/api', permissions.isAdmin, adminRoute)
 app.use('/api', courseRoute)
+app.use('/api', isAuth, userRoute)
+app.use('/api', isAdmin, adminRoute)
 
 start().then()
