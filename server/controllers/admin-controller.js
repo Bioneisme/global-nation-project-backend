@@ -1,4 +1,5 @@
 const User = require('../models/user-model')
+const Course = require('../models/course-model')
 const userService = require("../services/user-service");
 
 class AdminController {
@@ -55,6 +56,7 @@ class AdminController {
             next(e)
         }
     }
+
     async updateUser(req, res, next) {
         try {
             const {id, email, nickname, first_name, last_name, roles} = req.body
@@ -66,6 +68,16 @@ class AdminController {
                 roles
             })
             return res.status(200).json({'message': 'User successful updated'})
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getCourses(req, res, next) {
+        try {
+            const courses = await Course.find()
+
+            return res.status(200).json(courses)
         } catch (e) {
             next(e)
         }

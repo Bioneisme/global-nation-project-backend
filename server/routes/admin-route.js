@@ -13,4 +13,6 @@ router.post('/addUser', adminController.addUser)
 
 router.post('/updateUser', adminController.updateUser)
 
+router.get('/getCourses', adminController.getCourses)
+
 module.exports = router
