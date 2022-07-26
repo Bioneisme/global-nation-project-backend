@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from 'react';
+import API from "../../api";
 import {useParams} from "react-router-dom";
 import {toast} from "react-hot-toast";
-import API from "../../api";
+import CreateLesson from "../../components/CreateLesson";
 
 function CourseEditor() {
     const {id} = useParams()
     const [course, setCourse] = useState()
+    const [lesson, setLesson] = useState(null)
+
+    const showLesson = () => {
+        setLesson(lesson => [<CreateLesson/>]);
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -73,7 +79,10 @@ function CourseEditor() {
                         <h3>Lessons</h3>
                     </div>
                     <hr/>
-                    <button className="btn btn-outline-danger">Add new Lesson</button>
+                    <button className="btn btn-outline-danger" onClick={showLesson}>Add new Lesson</button>
+                    <div>
+                        {lesson}
+                    </div>
                 </div>
             </div>
             <br/>

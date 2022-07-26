@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
+
 import Users from '../../components/UsersList'
 import DeleteUser from '../../components/DeleteUser'
 import AddUser from '../../components/AddUser'
 import EditUser from '../../components/EditUserInput'
-import {Link} from "react-router-dom";
 
 function Admin() {
     const [users, setUsers] = useState([])
